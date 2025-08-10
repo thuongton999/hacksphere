@@ -1,0 +1,103 @@
+Goal: Make Planet the new homepage and extend to the other flows. Do NOT delete/rename any current code, routes, or UI. Additive, feature-flagged rollout.
+
+Guardrails
+Add-only / backward-compatible. No removals or renames.
+
+Gate with HACKSPHERE_PLANET_HOME_ENABLED=true.
+
+Flag off ➜ keep today’s homepage and behavior.
+
+Flag on ➜ "/" shows Planet Home; all old pages still reachable.
+
+1) Planet = Homepage (Participants + Mentors)
+Create page: src/planets/HomePlanet.tsx and route /planet (used as / when flag on).
+
+Galaxy Map background (SVG/Canvas) with country-like boundaries per team using a Voronoi tessellation (e.g., d3-voronoi):
+
+Each team = country polygon with a clear border (2–3px) and soft shadow.
+
+Size scales with awards/medals (land area ∝ award points; clamp min/max).
+
+Hover shows LandCard (title, tagline, demo, badges, chips).
+
+Click on MY country ➜ Team Management (link to the existing management page; don’t replace it).
+
+Explore: clicking other countries opens their LandCard (no edit controls).
+
+Styling: use bright palette; borders high-contrast; keep fun/clean.
+
+2) Investor/Sponsor Planet (Search-on-Map)
+Page: src/planets/InvestorsPlanet.tsx → route /planets/investors.
+
+Background: map of investor “lands” (same country style + size by their chips/awards).
+
+Google-style search bar centered on the map (large, pill radius) with keyword + filters.
+
+Results highlight matching teams on the same map + side list.
+
+Show competitors (other investors matching similar interests) as labeled countries so investors can see peers on the map.
+
+Cards include Allocate Chips and AI Match button.
+
+Do not alter existing investor APIs; add new ones under /api/v1/planets/* if needed.
+
+3) Judges + Organizers Planet
+Page: src/planets/JudgesOrganizersPlanet.tsx → route /planets/judges.
+
+Same country metaphor (size by awards/points).
+
+Quick actions: Create Event, Announcements, Go to Judging Queue (link to existing features).
+
+Scoreboard overlay shows medals/points; no change to current judging flow.
+
+4) Country Boundaries (clear visuals)
+Use Voronoi + smoothing for organic shapes.
+
+Stroke: 2–3px, brand Primary Blue for my team, neutral for others; subtle drop shadow for depth.
+
+Hover/selected country has glow; keyboard focus visible.
+
+5) UI Cleanups (your comments)
+Settings page
+
+Increase border contrast (border color darker by ~20%).
+
+Fix layout: consistent card widths, proper spacing; ensure responsive at 360–1440px.
+
+Community → Discussion channels
+
+Next to the green “234”, prepend label: Total 234 (or Tổng 234).
+
+Navigation reorg (clearer)
+
+Top-level order: Home (Planet), Teams, Schedule, Submissions, Judging, Mentors, Investors, Community, Profile, Settings.
+
+Keep all existing links; this is a reorder only when the flag is on.
+
+Add a divider before Settings to reduce clutter.
+
+6) Data/Logic (additive)
+If needed, add read-only endpoints for map data under /api/v1/planets:
+
+GET /map/teams → team id, awards score, centroid, track, myTeam flag.
+
+GET /map/investors → investor id, interests, chips score, competitor tags.
+
+No changes to existing tables. New tables must be separate and optional.
+
+7) Acceptance Criteria
+With flag off: site looks/works exactly as today.
+
+With flag on:
+
+/ = Planet Home with country boundaries; clicking my country opens existing Team Management.
+
+Investors planet shows big search bar on map, highlights matching teams + competitor investors.
+
+Land sizes reflect award counts across all planets.
+
+Settings border is darker; community channel shows “Total 234”; nav is simpler.
+
+No regressions or deleted functionality.
+
+Ask before changing any existing component outside /planets/*.

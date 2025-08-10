@@ -1,0 +1,148 @@
+Goal: Build a full-stack hackathon management platform.
+Frontend: React + TypeScript + Next.js + TailwindCSS.
+Backend: Python (Flask or Django) + PostgreSQL.
+
+1. Visual Style
+Design Theme: Professional but friendly — think tech-event vibes with clean lines, approachable typography, and inviting colors.
+
+Typography: Use Google Fonts Inter or Roboto. Clear headings, readable body text.
+
+Spacing: Ample whitespace to reduce clutter. Grid layouts for dashboard content.
+
+Corner Radius: Large rounded corners (rounded-2xl) for buttons, cards, modals.
+
+Shadows: Soft shadows (shadow-md for small elements, shadow-lg for modals).
+
+Icons: Use Lucide icons (consistent, thin-line style).
+
+Animation: Subtle hover animations (transition, duration-200, ease-in-out).
+
+2. Color Palette (Strict Rules)
+Primary Colors (Brand Core)
+
+Primary Blue #2F6BFF → Main CTAs (buttons, links)
+
+Light Blue #6EA3FF → Hover states, soft backgrounds
+
+Deep Navy #0B1B33 → Headers, high-contrast text
+
+Secondary / Accent
+
+Accent Teal #1EC6A8 → Secondary highlights, mentor tags
+
+Warm Coral #FF6B6B → Alerts, winner announcements
+
+Sunshine Yellow #FFB020 → Warnings, tooltips
+
+Soft Purple #A66CFF → Creative tracks
+
+Neutral
+
+White #FFFFFF → Main background
+
+Soft Grey #F5F7FA → Section backgrounds
+
+Mid Grey #E9EEF8 → Card/table stripes
+
+Dark Grey #4A4A4A → Secondary text
+
+Semantic
+
+Success #27C281 → Completed actions
+
+Warning #FFB020 → Needs attention
+
+Error #F04438 → Failed actions
+
+Info #2F6BFF → Informational
+
+⚠ Guidelines:
+
+Keep Primary Blue as the main CTA color — avoid using accent colors for main buttons.
+
+Warm Coral only for urgent or exciting alerts.
+
+Sunshine Yellow only for warnings.
+
+Soft Grey for dashboard section backgrounds to make white cards pop.
+
+3. Navigation & Layout
+Left Sidebar Navigation — dynamic per role (only show relevant links).
+
+Top Bar — profile menu, notifications, quick actions.
+
+Dashboard Layout — 2-column main content area with cards and widgets.
+
+Mobile View — collapsible sidebar into bottom navigation.
+
+4. User Roles (5)
+Each role has its own signup option and unique dashboard:
+
+Organizer → Event setup, sponsor management, analytics, announcements.
+
+Participant → Team finder, project submission, mentorship booking.
+
+Mentor → Session booking, assigned team list, feedback tools.
+
+Judge → Project review, scoring, feedback.
+
+Sponsor → Sponsor dashboard, ROI stats, branding assets.
+
+Signup Flow:
+
+Role selection dropdown at signup.
+
+Store role in DB.
+
+Backend enforces role-based permissions.
+
+Authentication
+
+Signup/login with email/password (JWT-based session handling)
+
+Role selection at signup stored in DB
+
+Backend authorization checks for each API route
+
+5. Frontend Requirements
+Framework: Next.js + TypeScript.
+
+CSS: TailwindCSS for all styling (no inline styles unless dynamic).
+
+Structure:
+
+/pages → Next.js routes
+
+/components → Reusable UI
+
+/layouts → Dashboard layouts
+
+/styles → Tailwind config with custom colors from palette
+
+Accessibility: High contrast for buttons/text, alt text for images.
+
+6. Backend Requirements
+Language: Python (Flask or Django).
+
+DB: PostgreSQL.
+
+Auth: JWT tokens, role-based middleware.
+
+API Structure: REST endpoints under /api/v1/ with role-specific routes.
+
+Data Models: User, Event, Team, Submission, Session, Sponsor, Role.
+
+7. General Development Notes
+Modular components, no hardcoded values for text → use constants.
+
+API returns JSON only.
+
+Secure environment variables.
+
+Fully responsive (mobile-first).
+
+Clean separation of frontend/backend folders.
+
+Instruction to AI:
+
+"Build this platform exactly as specified. Follow the color palette and usage rules strictly. Implement full role-based navigation, API endpoints, and dashboards. Use TailwindCSS for styling with professional but friendly aesthetics. Each role should have its own clean, uncluttered workspace. Frontend and backend must be separated, modular, and production-ready."

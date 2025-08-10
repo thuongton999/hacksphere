@@ -1,0 +1,249 @@
+Goal: Add the new Galaxy “Planets” gamification system (Participants+Mentors, Investors+Sponsors, Judges+Organizers) without removing or changing existing features/UI. Keep all current routes, pages, APIs, and styles working exactly as they are.
+
+Guardrails (must follow)
+Add-only: Do not delete or rename any existing files, exports, routes, or CSS tokens.
+
+Backwards-compatible: Existing pages and APIs must behave 100% the same.
+
+Isolated code: Put all new code under a /planets/ (or /galaxy/) namespace:
+
+Frontend: src/planets/* (components, pages, hooks, styles)
+
+Backend: api/planets/* (routes, controllers), db/migrations/* (new migrations only)
+
+Feature flag: Gate everything behind HACKSPHERE_PLANETS_ENABLED=true. If false or missing, nothing changes in the UI or API.
+
+Design system: Use our bright palette and layout from the PDFs:
+
+Colors: Primary Blue #2F6BFF, Accent Teal #1EC6A8, Warm Coral #FF6B6B, Sunshine #FFB020, neutrals as specified. 
+
+Hi-fi layout style and component look from the prototype pages. 
+
+Navigation: Add a single “Planets” entry (icon + label) that appears only when the flag is on. Do not remove/rename any existing nav items.
+
+Deliverables
+A) New routes (frontend)
+/planets/participants
+
+/planets/investors
+
+/planets/judges
+
+These are additive routes. Do not alter existing ones.
+
+B) Shared components (frontend)
+Create in src/planets/components/:
+
+GalaxyMap.tsx – interactive map/tiles; supports pins for Lands/teams.
+
+LandCard.tsx – team summary (title, tagline, demo link, badges, chips).
+
+BuildLogComposer.tsx – post form (text, media url).
+
+ChipButton.tsx – investor “allocate chips” CTA.
+
+PitchReelModal.tsx – 90-sec pitch preview (uses existing PitchPerfect output if available).
+
+SearchBar.tsx, FilterPills.tsx – investors/sponsors filtering.
+
+LeaderboardPanel.tsx – weekly/global/track tabs.
+
+MentorBadge.tsx, MentorScheduleCard.tsx – mentor availability & booking affordances.
+
+C) New data models (DB) – additive migrations only
+Create migrations that do not touch existing tables. Add indexes and FKs. Examples:
+
+sql
+Sao chép
+Chỉnh sửa
+-- 001_create_planet_tables.sql
+CREATE TABLE IF NOT EXISTS lands (
+  id SERIAL PRIMARY KEY,
+  team_id INTEGER NOT NULL REFERENCES teams(id),
+  title TEXT NOT NULL,
+  tagline TEXT,
+  demo_url TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+  id SERIAL PRIMARY KEY,
+  land_id INTEGER NOT NULL REFERENCES lands(id),
+  author_user_id INTEGER NOT NULL REFERENCES users(id),
+  body TEXT,
+  media_url TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS reactions (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER NOT NULL REFERENCES posts(id),
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  type TEXT NOT NULL CHECK (type IN ('like')),
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS vc_accounts (
+  user_id INTEGER PRIMARY KEY REFERENCES users(id),
+  verified BOOLEAN NOT NULL DEFAULT FALSE,
+  chips_quota_daily INTEGER NOT NULL DEFAULT 10,
+  chips_remaining_daily INTEGER NOT NULL DEFAULT 10,
+  last_reset_date DATE
+);
+
+CREATE TABLE IF NOT EXISTS chips (
+  id SERIAL PRIMARY KEY,
+  vc_user_id INTEGER NOT NULL REFERENCES users(id),
+  team_id INTEGER NOT NULL REFERENCES teams(id),
+  amount INTEGER NOT NULL CHECK (amount BETWEEN 1 AND 10),
+  note TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS leaderboards (
+  id SERIAL PRIMARY KEY,
+  team_id INTEGER NOT NULL REFERENCES teams(id),
+  week_start DATE NOT NULL,
+  score INTEGER NOT NULL DEFAULT 0,
+  breakdown JSONB NOT NULL DEFAULT '{}'::jsonb,
+  UNIQUE(team_id, week_start)
+);
+
+CREATE INDEX IF NOT EXISTS idx_posts_land ON posts(land_id);
+CREATE INDEX IF NOT EXISTS idx_reactions_post ON reactions(post_id);
+CREATE INDEX IF NOT EXISTS idx_chips_team ON chips(team_id);
+D) New APIs (backend) – versioned & prefixed
+Mount under /api/v1/planets only. Do not modify or remove existing APIs.
+
+GET /lands?track=&q= – list Lands (with badges/chips summary)
+
+POST /lands – create Land (team owner)
+
+GET /lands/:id/posts & POST /lands/:id/posts – build logs
+
+POST /posts/:id/react – like (with daily anti-spam caps)
+
+POST /investors/chips – allocate chips {team_id, amount(1-10), note}
+
+GET /leaderboard?scope=global|track|rookie – computed weekly
+
+POST /intros/request – auto-intro trigger (if chip thresholds met)
+
+GET /match/investors – “AI Match” placeholder; returns sorted teams by simple rules first (demo_live, judge_awards, momentum), ready to swap to AI later
+
+All endpoints must authorize by current role (participant, mentor, judge, organizer, investor). Use existing auth—don’t replace it.
+
+E) Feature flag wiring
+Read HACKSPHERE_PLANETS_ENABLED from env at server start and client build.
+
+If off: hide nav item and don’t register new routes; APIs can remain mounted but return 404 unless flag is on.
+
+F) Frontend pages (skeletons)
+Participants+Mentors (/planets/participants)
+
+Welcome banner, GalaxyMap, “Claim your Land” (opens create form).
+
+Right rail: LandCard (selected), tabs: Build Logs / Badges / Chips.
+
+Footer: LeaderboardPanel.
+
+Investors+Sponsors (/planets/investors)
+
+Header: SearchBar + FilterPills, AI Match toggle.
+
+Grid: LandCard list; ChipButton on each card.
+
+Land detail: PitchReelModal, “Interested” → POST /intros/request.
+
+Judges+Organizers (/planets/judges)
+
+Organizer quick actions: “Create Event”, “Announcements”.
+
+Judges: queue link to existing judging flow; show leaderboard + medal counts.
+
+Archive link to existing submissions/recordings.
+
+G) Points & badges (light v1)
+Implement points server-side with caps (anti-spam). Keep rules in a config file planets/points-rules.json. Examples:
+
+Create Land +50; daily build log +25 (max 1/day); demo added/updated +40;
+
+Mentor session completed +30; like received +2 (cap 20/day); helpful feedback +8;
+
+VC chips received +15; judge award +100.
+
+H) Styling (bright UI)
+Add CSS variables only (don’t rename existing tokens). In src/planets/styles/variables.css:
+
+css
+Sao chép
+Chỉnh sửa
+:root {
+  --primary-blue: #2F6BFF;     /* CTAs, links */
+  --accent-teal:  #1EC6A8;     /* mentor highlights */
+  --warm-coral:   #FF6B6B;     /* exciting CTAs / winner tags */
+  --sunshine:     #FFB020;     /* warnings / medals */
+  --soft-grey:    #F5F7FA;     /* section bg */
+  --mid-grey:     #E9EEF8;     /* cards/stripes */
+  --dark-grey:    #4A4A4A;
+  --white:        #FFFFFF;
+}
+Apply spacing, rounded corners, and bright card treatment per our hi-fi PDF. 
+ Use the palette exactly as in Colors.pdf. 
+
+Implementation order
+Add env flag + nav item (flag-gated).
+
+Create the three empty routes and page shells.
+
+Ship DB migrations.
+
+Implement APIs with unit tests; do not touch existing controllers.
+
+Build components and wire pages to new APIs.
+
+QA with flag off (site must look identical to current), then with flag on.
+
+Acceptance criteria (must pass)
+With HACKSPHERE_PLANETS_ENABLED=false: the app looks and behaves exactly the same as before (no new UI visible).
+
+With the flag on:
+
+New nav “Planets” appears; all 3 routes load.
+
+Creating a Land works and does not affect existing team flows.
+
+Posting a build log works; likes capped; leaderboards render.
+
+Investors can allocate chips (with daily limit & audit); intro requests create records but don’t alter existing meeting logic.
+
+No console errors; lighthouse ≥ the baseline.
+
+Non-negotiables
+No deletions of existing code, routes, or CSS.
+
+No renames of tokens/components used outside /planets.
+
+No intrusive refactors. All new logic remains namespaced and feature-flagged.
+
+(Optional) Code stubs to start
+Express example (allocate chips):
+
+js
+Sao chép
+Chỉnh sửa
+// api/planets/chips.routes.js
+router.post('/investors/chips', requireFlag, requireRole('investor'), async (req,res)=>{
+  const { team_id, amount, note } = req.body;
+  // validate 1..10, check investor remaining, decrement, insert chip record
+  // emit event 'chip:allocated' for points/leaderboard worker
+  return res.status(201).json({ ok: true });
+});
+Weekly leaderboard job:
+
+js
+Sao chép
+Chỉnh sửa
+// workers/leaderboardWeekly.js
+// score = xp_week + 5*unique_likers + 10*chips + judge_bonus
+Please implement exactly as specified above. Ask before altering any existing file.
