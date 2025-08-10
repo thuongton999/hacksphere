@@ -1,0 +1,21 @@
+name,domain,industry,size,email,website,website_status,last_checked,fit_score,last_updated
+GitHub,github.com,Developer Tools,1000+,partnerships@github.com,https://github.com,active,2025-08-09 21:41,95,2025-08-09
+Vercel,vercel.com,Cloud/DevOps,100-500,partnerships@vercel.com,https://vercel.com,active,2025-08-09 21:41,85,2025-08-09
+MongoDB,mongodb.com,Database,1000+,partnerships@mongodb.com,https://mongodb.com,active,2025-08-09 21:41,85,2025-08-09
+Stripe,stripe.com,Fintech,1000+,partnerships@stripe.com,https://stripe.com,active,2025-08-09 21:41,85,2025-08-09
+OpenAI,openai.com,AI/ML,500-1000,partnerships@openai.com,https://openai.com,error,2025-08-09 21:41,95,2025-08-09
+Figma,figma.com,Design Tools,500-1000,partnerships@figma.com,https://figma.com,active,2025-08-09 21:41,85,2025-08-09
+Supabase,supabase.com,Backend/Database,50-200,partnerships@supabase.com,https://supabase.com,active,2025-08-09 21:41,85,2025-08-09
+Notion,notion.so,Productivity,200-500,partnerships@notion.so,https://notion.so,active,2025-08-09 21:41,85,2025-08-09
+Discord,discord.com,Communication,500-1000,partnerships@discord.com,https://discord.com,active,2025-08-09 21:41,85,2025-08-09
+Replit,replit.com,Developer Tools,50-200,partnerships@replit.com,https://replit.com,active,2025-08-09 21:41,85,2025-08-09
+Auth0,auth0.com,Security,500-1000,partnerships@auth0.com,https://auth0.com,active,2025-08-09 21:41,85,2025-08-09
+Twilio,twilio.com,Communications API,1000+,partnerships@twilio.com,https://twilio.com,active,2025-08-09 21:41,85,2025-08-09
+Cloudflare,cloudflare.com,Cloud/Security,1000+,partnerships@cloudflare.com,https://cloudflare.com,active,2025-08-09 21:41,85,2025-08-09
+Datadog,datadoghq.com,Monitoring,1000+,partnerships@datadoghq.com,https://datadoghq.com,active,2025-08-09 21:41,85,2025-08-09
+PlanetScale,planetscale.com,Database,50-200,partnerships@planetscale.com,https://planetscale.com,active,2025-08-09 21:41,85,2025-08-09
+Netlify,netlify.com,Cloud/DevOps,100-500,partnerships@netlify.com,https://netlify.com,active,2025-08-09 21:41,85,2025-08-09
+Heroku,heroku.com,Cloud/DevOps,1000+,partnerships@heroku.com,https://heroku.com,active,2025-08-09 21:41,85,2025-08-09
+SendGrid,sendgrid.com,Communications API,500-1000,partnerships@sendgrid.com,https://sendgrid.com,active,2025-08-09 21:41,85,2025-08-09
+Algolia,algolia.com,Search/API,200-500,partnerships@algolia.com,https://algolia.com,active,2025-08-09 21:41,85,2025-08-09
+Contentful,contentful.com,CMS/API,200-500,partnerships@contentful.com,https://contentful.com,active,2025-08-09 21:41,85,2025-08-09
