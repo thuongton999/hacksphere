@@ -1,0 +1,52 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+type: 'application'
+language: 'typescript'
+platform: 'node'
+
+project:
+  name: 'api'
+  description: 'Core API service for HackSphere'
+
+dependsOn:
+  - 'database'
+  - 'auth'
+  - 'events'
+  - 'config'
+  - 'shared'
+
+tasks:
+  dev:
+    command: 'bun run dev'
+    local: true
+    options:
+      persistent: true
+
+  build:
+    command: 'bun run build'
+    deps:
+      - '~:typecheck'
+    inputs:
+      - 'src/**/*'
+      - 'migrations/**/*'
+    outputs:
+      - 'dist'
+
+  start:
+    command: 'bun run start'
+    deps:
+      - '~:build'
+
+  migrate:
+    command: 'bun run migrate'
+    local: true
+
+  seed:
+    command: 'bun run seed'
+    local: true
+
+  lint:
+    command: 'bun run lint'
+
+  typecheck:
+    command: 'bun run typecheck'

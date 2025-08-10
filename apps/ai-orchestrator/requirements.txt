@@ -1,0 +1,44 @@
+# Core framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# AI and LLM libraries
+langchain>=0.1.0
+langchain-openai>=0.0.5
+openai>=1.0.0
+tiktoken>=0.5.0
+
+# Crew AI for agent orchestration
+crewai>=0.1.0
+
+# Database and vector store
+psycopg2-binary>=2.9.7
+pgvector>=0.2.0
+sqlalchemy>=2.0.0
+alembic>=1.13.0
+
+# Redis for caching and queues
+redis>=5.0.0
+
+# HTTP client
+httpx>=0.25.0
+aiohttp>=3.9.0
+
+# Utilities
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+python-multipart>=0.0.6
+
+# Development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.7.0
+
+# Integrations (matching legacy utils)
+selenium>=4.15.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+apify-client>=1.7.0

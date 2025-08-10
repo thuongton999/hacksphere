@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hacksphere/shared": ["./shared/src"],
+      "@hacksphere/ui": ["./packages/ui/src"],
+      "@hacksphere/database": ["./packages/database/src"],
+      "@hacksphere/auth": ["./packages/auth/src"],
+      "@hacksphere/events": ["./packages/events/src"],
+      "@hacksphere/integrations": ["./packages/integrations/src"],
+      "@hacksphere/config": ["./packages/config/src"]
+    }
+  },
+  "include": [
+    "apps/*/src/**/*",
+    "packages/*/src/**/*",
+    "shared/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next"
+  ]
+}

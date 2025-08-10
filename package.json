@@ -1,0 +1,28 @@
+{
+  "name": "hacksphere",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-Driven Hackathon Management Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "shared"
+  ],
+  "scripts": {
+    "build": "moon run :build",
+    "test": "moon run :test",
+    "lint": "moon run :lint",
+    "dev": "moon run :dev",
+    "clean": "moon clean",
+    "check": "moon check --all",
+    "setup": "moon setup"
+  },
+  "devDependencies": {
+    "@moonrepo/cli": "^1.39.4",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  }
+}

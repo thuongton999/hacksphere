@@ -1,0 +1,70 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+# Global task definitions that can be inherited by projects
+tasks:
+  # Development
+  dev:
+    command: 'bun run dev'
+    local: true
+    options:
+      persistent: true
+
+  # Building
+  build:
+    command: 'bun run build'
+    inputs:
+      - 'src/**/*'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '!**/*.test.*'
+      - '!**/__tests__/**'
+    outputs:
+      - 'dist'
+      - 'build'
+      - '.next'
+
+  # Testing
+  test:
+    command: 'bun test'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+      - '**/*.test.*'
+      - '**/__tests__/**'
+      - 'package.json'
+
+  # Linting
+  lint:
+    command: 'bun run lint'
+    inputs:
+      - 'src/**/*'
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.json'
+      - '.eslintrc.*'
+      - 'package.json'
+
+  # Type checking
+  typecheck:
+    command: 'bun run typecheck'
+    inputs:
+      - 'src/**/*'
+      - 'tsconfig.json'
+      - 'package.json'
+
+  # Formatting
+  format:
+    command: 'bun run format'
+    inputs:
+      - 'src/**/*'
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.json'
+      - '**/*.md'
+
+  # Cleaning
+  clean:
+    command: 'bun run clean'
+    local: true
