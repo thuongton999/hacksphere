@@ -2,15 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "apps/core"
-		},
-		{
-			"path": "packages/core-ai"
-		},
-		{
-			"path": "utils"
 		}
 	],
 	"settings": {}

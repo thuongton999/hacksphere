@@ -1,0 +1,40 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+type: 'library'
+language: 'typescript'
+platform: 'node'
+
+project:
+  name: 'database'
+  description: 'Database models and repositories for HackSphere'
+
+dependsOn:
+  - 'shared'
+
+tasks:
+  build:
+    command: 'bun run build'
+    inputs:
+      - 'src/**/*'
+    outputs:
+      - 'dist'
+
+  dev:
+    command: 'bun run dev'
+    local: true
+    options:
+      persistent: true
+
+  lint:
+    command: 'bun run lint'
+
+  typecheck:
+    command: 'bun run typecheck'
+
+  migrate:
+    command: 'bun run migrate'
+    local: true
+
+  generate:
+    command: 'bun run generate'
+    local: true

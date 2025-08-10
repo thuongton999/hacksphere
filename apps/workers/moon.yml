@@ -1,0 +1,42 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+type: 'application'
+language: 'typescript'
+platform: 'node'
+
+project:
+  name: 'workers'
+  description: 'Background workers and notifications service for HackSphere'
+
+dependsOn:
+  - 'events'
+  - 'integrations'
+  - 'config'
+  - 'shared'
+
+tasks:
+  dev:
+    command: 'bun run dev'
+    local: true
+    options:
+      persistent: true
+
+  build:
+    command: 'bun run build'
+    deps:
+      - '~:typecheck'
+    inputs:
+      - 'src/**/*'
+    outputs:
+      - 'dist'
+
+  start:
+    command: 'bun run start'
+    deps:
+      - '~:build'
+
+  lint:
+    command: 'bun run lint'
+
+  typecheck:
+    command: 'bun run typecheck'

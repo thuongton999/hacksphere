@@ -1,0 +1,48 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+type: 'application'
+language: 'python'
+platform: 'system'
+
+project:
+  name: 'ai-orchestrator'
+  description: 'AI agent orchestration service for HackSphere'
+
+dependsOn:
+  - 'events'
+  - 'shared'
+
+tasks:
+  dev:
+    command: 'python -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8001'
+    local: true
+    options:
+      persistent: true
+
+  build:
+    command: 'python -m build'
+    inputs:
+      - 'src/**/*'
+      - 'requirements.txt'
+      - 'pyproject.toml'
+    outputs:
+      - 'dist'
+
+  start:
+    command: 'python -m uvicorn src.main:app --host 0.0.0.0 --port 8001'
+
+  install:
+    command: 'pip install -r requirements.txt'
+    local: true
+
+  test:
+    command: 'python -m pytest'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+
+  lint:
+    command: 'python -m flake8 src'
+
+  format:
+    command: 'python -m black src'

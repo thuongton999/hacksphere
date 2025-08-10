@@ -1,0 +1,20 @@
+$schema: 'https://moonrepo.dev/schemas/workspace.json'
+
+# Project discovery
+projects:
+  - 'apps/*'
+  - 'packages/*'
+  - 'shared'
+
+# Global settings
+runner:
+  archivableTargets:
+    - 'build'
+    - 'package'
+  cacheLifetime: '7 days'
+  inheritColorsForPipedTasks: true
+
+# VCS settings
+vcs:
+  manager: 'git'
+  defaultBranch: 'main'
