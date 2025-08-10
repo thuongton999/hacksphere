@@ -1,4 +1,6 @@
 ![HackSphere Banner](assets/hacksphere-pitch-banner.jpg)
+![HackSphere Galaxy Map](assets/hacksphere-galaxy-map.jpg)
+![HackSphere Mentors](assets/hacksphere-mentors.jpg)
 # HackSphere AI - Monorepo
 
 This repository is structured as a monorepo using **Moon** and **Bun** to streamline development across multiple projects. Below are guidelines to help you navigate and work effectively within this setup.
